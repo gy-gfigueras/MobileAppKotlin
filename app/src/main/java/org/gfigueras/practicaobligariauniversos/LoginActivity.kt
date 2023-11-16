@@ -44,12 +44,13 @@ class LoginActivity : AppCompatActivity() {
         mode = findViewById(R.id.stateText)
         daousers = DAOUsers()
 
+
         if (!loginState) {
             findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.GONE
             loginState = true
         } else {
             findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.VISIBLE
-            findViewById<Button>(R.id.loginButton).text = "Sign Up"
+            this.findViewById<Button>(R.id.loginButton).text = "Sign Up"
             loginState = false
 
         }
