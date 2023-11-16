@@ -16,12 +16,14 @@ class SplashActivity : AppCompatActivity() {
             try {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.scale_up, R.anim.scale_up)
+
                 finish()  // Asegúrate de agregar esta línea para cerrar SplashActivity
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.i("EROOOOOOOOR", "ERROOOOOOR")
             }
-        }, 2300)
+        }, 4800)
 
 
     }

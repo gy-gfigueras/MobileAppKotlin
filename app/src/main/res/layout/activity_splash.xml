@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lottie"
-        app:lottie_rawRes="@raw/lottie_animation3"
+        app:lottie_rawRes="@raw/lottie_animattion4"
         app:lottie_autoPlay="true"
         android:layout_centerInParent="true" />
 

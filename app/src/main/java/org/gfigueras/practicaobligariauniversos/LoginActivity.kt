@@ -25,15 +25,16 @@ class LoginActivity : AppCompatActivity() {
     private var loginButton: Button? = null
     private var daousers: IDAOUsers? = null
     private var mode: TextView? = null
+    private val MODE_LOGIN = 0
+    private val MODE_SIGNUP = 1
 
     @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        var loginState:Boolean = false
+        var loginState: Boolean = false
         findViewById<EditText>(R.id.txtUsername).text.clear()
         findViewById<EditText>(R.id.txtPassword).text.clear()
-
 
         // Inicialización de vistas
         buttonGithub = findViewById(R.id.githubButton)
@@ -42,6 +43,59 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         mode = findViewById(R.id.stateText)
         daousers = DAOUsers()
+
+        if (!loginState) {
+            findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.GONE
+            loginState = true
+        } else {
+            findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.VISIBLE
+            findViewById<Button>(R.id.loginButton).text = "Sign Up"
+            loginState = false
+
+        }
+
+        mode!!.setOnClickListener {
+            loginState = !loginState
+            if (loginState) {
+                updateUIForLogin()
+            } else {
+                updateUIForSignUp()
+            }
+        }
+
+        loginButton!!.setOnClickListener {
+            lifecycleScope.launch {
+                val username: EditText = findViewById(R.id.txtUsername)
+                val password: EditText = findViewById(R.id.txtPassword)
+                val email: EditText = findViewById(R.id.txtEmail)
+
+                if (loginState) {
+                    if (daousers!!.login(username.text.toString(), password.text.toString())) {
+                        openMain()
+                    } else {
+                        val dialog = AlertDialog.Builder(this@LoginActivity).setTitle("ERROR").setMessage("Usuario incorrecto").setPositiveButton("Aceptar", null).create().show()
+                    }
+                } else {
+                    // Corregir el bloque del sign-up
+                    when (daousers!!.signUp(username.text.toString(), email.text.toString(), password.text.toString())) {
+                        0 -> {
+                            val dialog = AlertDialog.Builder(this@LoginActivity).setTitle("Correcto").setMessage("Usuario creado correctamente, inicie sesion").setPositiveButton("Aceptar", null).create().show()
+                        }
+                        1 -> {
+                            val dialog = AlertDialog.Builder(this@LoginActivity).setTitle("Incorrecto").setMessage("El nombre de usuario ya existe").setPositiveButton("Aceptar", null).create().show()
+                        }
+                        2 -> {
+                            val dialog = AlertDialog.Builder(this@LoginActivity).setTitle("Incorrecto").setMessage("Revise su correo, o puede que ya exista").setPositiveButton("Aceptar", null).create().show()
+                        }
+                        else -> {
+                            val dialog = AlertDialog.Builder(this@LoginActivity).setTitle("Error").setMessage("Error en la base de datos").setPositiveButton("Aceptar", null).create().show()
+
+                        }
+                    }
+                }
+            }
+        }
+
 
         // Configuración de acciones para los botones de redes sociales
         buttonGithub!!.setOnClickListener {
@@ -64,34 +118,13 @@ class LoginActivity : AppCompatActivity() {
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/guiillee_.03/?next=%2F"))
             startActivity(browserIntent)
         }
-
-        mode!!.setOnClickListener{
-            findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.GONE
-        }
-
-        // Configuración de acción para el botón de inicio de sesión
-        loginButton!!.setOnClickListener {
-            lifecycleScope.launch {
-                val username: EditText = findViewById(R.id.txtUsername)
-                val password: EditText = findViewById(R.id.txtPassword)
-                val email: EditText = findViewById(R.id.txtEmail)
-                if(daousers!!.login(username.text.toString(), password.text.toString()) == true){
-                    openMain()
-                }else {
-                    val dialog = AlertDialog.Builder(this@LoginActivity)
-                        .setTitle("ERROR")
-                        .setMessage("USUARIO INCORRECTO")
-                        .setPositiveButton("Aceptar", null)
-                        .create()
-                    dialog.show()
-                }
-            }
-        }
     }
     fun openMain() {
         Log.i("LoginActivity", "Abriendo MainActivity")
         val intent: Intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.scale_up, R.anim.scale_down)
+
     }
 
     // Cuando tu actividad se destruye (por ejemplo, en onDestroy), asegúrate de cerrar el cliente
@@ -99,4 +132,15 @@ class LoginActivity : AppCompatActivity() {
         super.onDestroy()
         daousers?.closeClient()
     }
+private fun updateUIForLogin() {
+    findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.GONE
+    findViewById<Button>(R.id.loginButton).text = "Login"
+    findViewById<TextView>(R.id.stateText).text = "Registrarse"
+}
+
+private fun updateUIForSignUp() {
+    findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.VISIBLE
+    findViewById<Button>(R.id.loginButton).text = "Registrarse"
+    findViewById<TextView>(R.id.stateText).text = "Iniciar Sesión"
+}
 }
