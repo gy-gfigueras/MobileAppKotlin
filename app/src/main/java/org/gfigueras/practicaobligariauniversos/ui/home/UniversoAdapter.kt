@@ -37,23 +37,7 @@ class UniversoAdapter(private val context: Context, private val universos: List<
         val universo = universos[position]
 
         // Carga la imagen con Glide según el nombre almacenado en la base de datos
-        when (universo.getNombre()) {
-            "Vanaheim" -> Glide.with(context).load(R.drawable.universe_vanaheim).into(holder.imageView)
-            "Asgard" -> Glide.with(context).load(R.drawable.universe_asgard).into(holder.imageView)
-            "Alfheim" -> Glide.with(context).load(R.drawable.universe_alfheim).into(holder.imageView)
-            "Svartalfheim" -> Glide.with(context).load(R.drawable.universe_svartalfheim).into(holder.imageView)
-            "Midgard" -> Glide.with(context).load(R.drawable.universe_midgard).into(holder.imageView)
-            "Jötunheim" -> Glide.with(context).load(R.drawable.universe_jotunheim).into(holder.imageView)
-            "Muspelheim" -> Glide.with(context).load(R.drawable.universe_muspelheim).into(holder.imageView)
-            "Niflheim" -> Glide.with(context).load(R.drawable.universe_niflheim).into(holder.imageView)
-            "Helheim" -> Glide.with(context).load(R.drawable.universe_helheim).into(holder.imageView)
-            "Ginnungagap" -> Glide.with(context).load(R.drawable.universe_ginnungagap).into(holder.imageView)
-
-            else -> {
-                // Puedes manejar un caso predeterminado o mostrar un recurso de imagen predeterminado
-                Glide.with(context).load(R.drawable.universe_vanaheim).into(holder.imageView)
-            }
-        }
+        Glide.with(context).load(universo.getImagen()).into(holder.imageView)
 
         holder.nombreTextView.text = universo.getNombre()
 

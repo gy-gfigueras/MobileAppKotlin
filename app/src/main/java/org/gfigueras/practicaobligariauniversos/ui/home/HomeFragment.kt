@@ -31,10 +31,10 @@ class HomeFragment : Fragment() {
         recyclerView = binding.recyclerView
 
         // Configura el RecyclerView con un GridLayoutManager y un adaptador
-        recyclerView!!.layoutManager = GridLayoutManager(requireContext(), 2)
+        recyclerView!!.layoutManager = GridLayoutManager(requireContext(), 1)
         recyclerView!!.addItemDecoration(
             GridSpacingItemDecoration(
-                2,
+                1,
                 resources.getDimensionPixelSize(R.dimen.grid_spacing),
                 true
             )
