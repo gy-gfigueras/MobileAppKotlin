@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+
 }
 
 android {
@@ -28,6 +29,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -59,10 +61,9 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization:1.6.7")
     implementation("io.ktor:ktor-client-logging:1.6.7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-
-
-
-
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.gridlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

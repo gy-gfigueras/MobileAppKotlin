@@ -3,13 +3,23 @@ package org.gfigueras.practicaobligariauniversos.controller
 import org.gfigueras.practicaobligariauniversos.model.DAODB.FactoryDB
 import android.content.Context
 import org.gfigueras.practicaobligariauniversos.model.DAODB.IDAODB
+import org.gfigueras.practicaobligariauniversos.model.DAOUsers.FactoryServer
+import org.gfigueras.practicaobligariauniversos.model.DAOUsers.IDAOUsers
 import org.gfigueras.practicaobligariauniversos.model.entities.Mapa
 import org.gfigueras.practicaobligariauniversos.model.entities.Universo
+import org.gfigueras.practicaobligariauniversos.model.entities.User
 
 class Controller(context: Context): IController {
     private var dbdao: IDAODB? = null
+    private var daousers: IDAOUsers? = null
+
+    companion object{
+        public var userSaved: User? = null
+
+    }
     init{
         dbdao = FactoryDB.getDao(FactoryDB.MODE_SQLITE, context)
+        daousers = FactoryServer.getDao(FactoryServer.MODE_MYSQL)
     }
     override fun listUniversos(): MutableList<Universo> {
         return dbdao!!.listUniversos()
@@ -41,6 +51,18 @@ class Controller(context: Context): IController {
 
     override fun getMapas(mundo: Int): MutableList<Mapa>? {
        return  dbdao!!.getMapas(mundo)
+    }
+
+    override suspend fun login(username: String, password: String): Boolean {
+        return daousers!!.login(username, password)
+    }
+
+    override suspend fun signUp(username: String, email: String, password: String): Int {
+        return daousers!!.signUp(username,email,password)
+    }
+
+    override suspend fun getUser(username: String, password: String): String{
+        return daousers!!.getUser(username, password)
     }
 
 

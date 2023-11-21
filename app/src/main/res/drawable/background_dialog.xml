@@ -1,0 +1,10 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Fondo negro con 80% de opacidad -->
+    <solid android:color="#75000000" />
+
+    <!-- Borde dorado -->
+    <stroke android:color="@color/light_gold" android:width="2dp" />
+
+    <!-- Borde redondeado -->
+    <corners android:radius="33dp" />
+</shape>

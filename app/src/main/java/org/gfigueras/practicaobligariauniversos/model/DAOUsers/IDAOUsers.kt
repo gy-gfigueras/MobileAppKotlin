@@ -4,5 +4,7 @@ interface IDAOUsers {
 
     suspend fun login(username:String, password:String):Boolean
     suspend fun signUp(username:String, email:String, password:String):Int
-    fun closeClient()
+    suspend fun getUser(username: String, password: String): String
+
+        fun closeClient()
 }

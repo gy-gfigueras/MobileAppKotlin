@@ -1,0 +1,4 @@
+<!-- res/font/font_file.xml -->
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+    <font app:fontStyle="normal" app:fontWeight="400" app:font="@font/cinzel_regular" />
+</font-family>

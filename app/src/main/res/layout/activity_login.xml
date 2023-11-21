@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bacground_dark"
+    android:background="@drawable/background_update"
     tools:context=".LoginActivity"
     tools:ignore="MissingDefaultResource"
     android:id="@+id/activityLogin">
@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.592">
+        app:layout_constraintVertical_bias="0.592"
+        tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/txtLayoutUsername"

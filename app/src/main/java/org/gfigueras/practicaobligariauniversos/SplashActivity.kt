@@ -7,6 +7,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 
+@Suppress("DEPRECATION")
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,13 +19,11 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 overridePendingTransition(R.anim.scale_up, R.anim.scale_up)
 
-                finish()  // Asegúrate de agregar esta línea para cerrar SplashActivity
+                finish()
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.i("EROOOOOOOOR", "ERROOOOOOR")
             }
         }, 4800)
-
-
     }
 }

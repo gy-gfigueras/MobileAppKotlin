@@ -12,5 +12,9 @@ interface IController {
     fun getMapa(name:String): Mapa?
     fun getMapas(mundo:String):MutableList<Mapa>?
     fun getMapas(mundo: Int): MutableList<Mapa>?
+    suspend fun login(username:String, password:String):Boolean
+    suspend fun signUp(username:String, email:String, password:String):Int
+    suspend fun getUser(username: String, password: String): String
+
 
 }

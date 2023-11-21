@@ -2,6 +2,7 @@ package org.gfigueras.practicaobligariauniversos.model.DAODB
 
 import org.gfigueras.practicaobligariauniversos.model.entities.Mapa
 import org.gfigueras.practicaobligariauniversos.model.entities.Universo
+import org.gfigueras.practicaobligariauniversos.model.*
 
 interface IDAODB{
     fun listUniversos(): MutableList<Universo>

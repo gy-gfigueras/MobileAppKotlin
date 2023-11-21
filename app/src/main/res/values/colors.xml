@@ -9,4 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#E467FA</color>
     <color name="boton">#DB56FF</color>
+    <color name="light_gold">#b48e4f</color>
+    <color name="dark_gold">#7a5d2f</color>
+    <color name="medium_gold">#bea163</color>
+    <color name="bone_white">#1E0437</color>
+    <color name="background">#2B0C47</color>
+    <color name="card_color">#12FFFFFF</color>
+    <color name="alert_color">#75000000</color>
+
 </resources>

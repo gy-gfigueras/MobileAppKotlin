@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/fondo2">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -15,8 +16,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/Theme.PracticaObligatorioUniversos.PopupOverlay" />
+            android:background="@color/background"
+            app:popupTheme="@style/Theme.PracticaObligatorioUniversos.PopupOverlay"
+            app:titleTextColor="@color/light_gold" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
