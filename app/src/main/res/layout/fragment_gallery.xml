@@ -1,63 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- res/layout/fragment_gallery.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.gallery.GalleryFragment"
-    android:background="@drawable/fondo3">
+    tools:context=".ui.gallery.GalleryFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/universeInput"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="290dp"
-        android:layout_height="77dp"
-        android:orientation="vertical"
-        app:boxStrokeColor="@drawable/border_color_gold"
-        app:counterEnabled="true"
-        app:counterMaxLength="20"
-        app:counterTextColor="@color/white"
-        app:cursorColor="@color/white"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/white"
-        app:hintTextColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.409"
-        app:passwordToggleEnabled="false"
-        app:placeholderTextColor="@color/white"
-        app:prefixTextColor="@color/white">>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txtUsername"
+        <!-- Utiliza un RecyclerView en lugar de GridLayout -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:drawableStart="@drawable/universo"
-            android:drawablePadding="10dp"
-            android:hint="Mapas"
-            android:maxLength="20"
-            android:textColor="@color/white"
-            android:textColorHighlight="#FFFFFF"
-            android:textColorHint="@color/white"
-            tools:ignore="MissingConstraints" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="4dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"/>
 
-    <Button
-        android:id="@+id/universeSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/light_gold"
-        android:fontFamily="@font/font_file"
-        android:text="Buscar Universo"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

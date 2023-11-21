@@ -1,0 +1,14 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Color de fondo transparente -->
+    <solid android:color="#20000000" />
+
+    <!-- Borde dorado con un radio de borde de 8dp -->
+    <stroke
+        android:width="1dp"
+        android:color="@color/light_gold" />
+
+    <!-- Radio de borde -->
+    <corners android:radius="12dp" />
+</shape>

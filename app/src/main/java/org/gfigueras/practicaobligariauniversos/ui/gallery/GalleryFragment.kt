@@ -1,26 +1,25 @@
-package org.gfigueras.practicaobligatorio.ui.gallery
+package org.gfigueras.practicaobligariauniversos.ui.gallery
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import org.gfigueras.practicaobligariauniversos.R
 import org.gfigueras.practicaobligariauniversos.controller.Controller
 import org.gfigueras.practicaobligariauniversos.controller.IController
 import org.gfigueras.practicaobligariauniversos.databinding.FragmentGalleryBinding
-import org.gfigueras.practicaobligariauniversos.model.entities.Universo
 
 class GalleryFragment : Fragment() {
 
     private var _binding: FragmentGalleryBinding? = null
-    private val binding get() = _binding!!
+    private var recyclerView: RecyclerView? = null
     private var controlador: IController? = null
-    private var universeInput: EditText? = null
-    private var search: Button? = null
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,16 +29,37 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
         controlador = Controller(requireContext())
+        recyclerView = binding.recyclerView
 
-        universeInput = binding.universeInput.editText
-        search = binding.universeSearch
-        val controller: IController = Controller(requireContext())
+        // Configura el RecyclerView con un GridLayoutManager y un adaptador
+        recyclerView!!.layoutManager = GridLayoutManager(requireContext(), 2)
+        recyclerView!!.addItemDecoration(
+            GridSpacingItemDecoration(
+                2,
+                resources.getDimensionPixelSize(R.dimen.grid_spacing),
+                true
+            )
+        )
 
-        search!!.setOnClickListener{
-            var universo: Universo = controlador!!.getUniverso(universeInput!!.text.toString())!!
-            val dialog = AlertDialog.Builder(requireContext()).setTitle(universo.getNombre()).setMessage(universo.getDescripcion()).setPositiveButton("Aceptar", null).create().show()
+        // Configura el adaptador para el RecyclerView con la lista de mapas
+        val adapter = MapaAdapter(requireContext(), controlador!!.listMapas())
+        recyclerView!!.adapter = adapter
 
-        }
+        // Añade un ScrollListener para cargar más elementos al hacer scroll
+        recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                // Imprime mensajes de registro para verificar si el evento de desplazamiento se está llamando
+                Log.d("ScrollListener", "onScrolled: $dy")
+
+                // Comprueba si ha llegado al final del RecyclerView
+                if (!recyclerView.canScrollVertically(1)) {
+                    // Aquí puedes cargar más elementos o realizar alguna acción al llegar al final
+                    Log.d("ScrollListener", "End of list reached!")
+                }
+            }
+        })
 
         return root
     }
