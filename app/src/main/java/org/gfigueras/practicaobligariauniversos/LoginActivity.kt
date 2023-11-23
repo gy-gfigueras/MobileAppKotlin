@@ -1,10 +1,13 @@
 package org.gfigueras.practicaobligariauniversos
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -71,6 +74,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (loginState) {
                     if (controlador!!.login(username.text.toString(), password.text.toString())) {
+                        Tokenizer.initialize(this@LoginActivity)
                         Controller.userSaved = Tokenizer.tokenizar(controlador!!.getUser(username.text.toString(),password.text.toString()!!))
                         Log.i("USER", Controller.userSaved.toString())
                         showLoadingScreen()
@@ -142,6 +146,20 @@ class LoginActivity : AppCompatActivity() {
             val browserIntent =
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/guiillee_.03/?next=%2F"))
             startActivity(browserIntent)
+        }
+
+        val rootView = findViewById<View>(R.id.activityLogin) // Reemplaza con el ID de tu layout principal
+        rootView.setOnClickListener {
+            hideKeyboard()
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusedView = currentFocus
+
+        if (currentFocusedView != null) {
+            inputMethodManager.hideSoftInputFromWindow(currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
 

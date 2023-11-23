@@ -1,9 +1,12 @@
 package org.gfigueras.practicaobligariauniversos.ui.gallery
-
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -36,8 +39,13 @@ class MapaAdapter(private val context: Context, private val mapas: List<Mapa>) :
         holder.nombreTextView.text = mapa.getNombre()
         holder.descripcionTextView.text = mapa.getUniverso().getNombre()
 
+        // Configura la animación de desvanecimiento (fade-in)
+        val fadeIn = AlphaAnimation(0f, 1f)
+        fadeIn.duration = 1000L // Duración de la animación de desvanecimiento (1 segundo)
+        holder.itemView.startAnimation(fadeIn)
+
         holder.itemView.setOnClickListener {
-            mostrarDialogo(mapa.getDescripcion())
+            mostrarDialogo(mapa)
         }
     }
 
@@ -45,14 +53,9 @@ class MapaAdapter(private val context: Context, private val mapas: List<Mapa>) :
         return mapas.size
     }
 
-    private fun mostrarDialogo(descripcion: String) {
-        val dialog = AlertDialog.Builder(context)
-            .setTitle("Descripción")
-            .setMessage(descripcion)
-            .setPositiveButton("Cerrar", null)
-            .create()
-        dialog.show()
-        val drawable = ContextCompat.getDrawable(context, R.drawable.background_dialog)
-        dialog.window?.setBackgroundDrawable(drawable)
+    private fun mostrarDialogo(mapa: Mapa) {
+        // Crea y muestra el diálogo personalizado con la información del mapa
+        val mapaDialog = MapaDialog(context, mapa)
+        mapaDialog.show()
     }
 }

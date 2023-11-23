@@ -1,0 +1,8 @@
+<!-- res/anim/slide_out.xml -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:fromXDelta="0%"
+        android:toXDelta="100%"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:duration="@android:integer/config_shortAnimTime" />
+</set>

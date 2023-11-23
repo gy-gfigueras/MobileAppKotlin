@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.PracticaObligatorioUniversos" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/light_gold</item>
+        <item name="colorPrimaryVariant">@color/light_gold</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/medium_gold</item>
+        <item name="colorSecondaryVariant">@color/medium_gold</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/black</item>
@@ -19,6 +19,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="NavigationDrawerTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/font_file</item>
+    </style>
+
+
 
 
     <style name="Theme.PracticaObligatorioUniversos.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

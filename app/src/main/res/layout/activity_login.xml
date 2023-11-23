@@ -2,23 +2,24 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_update"
+    android:background="@drawable/new_login"
     tools:context=".LoginActivity"
-    tools:ignore="MissingDefaultResource"
-    android:id="@+id/activityLogin">
+    tools:ignore="MissingDefaultResource">
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="144dp"
-        android:layout_height="121dp"
+        android:layout_width="200dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="-10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.074"
-        app:srcCompat="@drawable/logo"
+        app:srcCompat="@drawable/logo_dorado_png"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
@@ -127,7 +128,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txtLayoutPassword"
+            android:id="@+id/txtLayoutPasswordOld"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="290dp"
             android:layout_height="77dp"
@@ -173,9 +174,8 @@
         <Button
             android:id="@+id/loginButton"
             android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:layout_marginTop="0dp"
-            android:background="@drawable/boton_login_background"
             android:text="LOGIN"
             android:textColor="#ffffff"
             android:textSize="16sp"
@@ -186,7 +186,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.638"
-            tools:ignore="HardcodedText"
+            android:backgroundTint="@color/light_gold"
             tools:visibility="visible" />
 
         <TextView

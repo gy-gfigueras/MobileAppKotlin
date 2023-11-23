@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.gfigueras.practicaobligariauniversos.MainActivity
 import org.gfigueras.practicaobligariauniversos.R
 import org.gfigueras.practicaobligariauniversos.controller.Controller
 import org.gfigueras.practicaobligariauniversos.controller.IController
@@ -31,6 +33,9 @@ class GalleryFragment : Fragment() {
         controlador = Controller(requireContext())
         recyclerView = binding.recyclerView
 
+        (activity as? MainActivity)?.setToolbarHamburgerIcon(R.drawable.menu)
+
+
         // Configura el RecyclerView con un GridLayoutManager y un adaptador
         recyclerView!!.layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView!!.addItemDecoration(
@@ -44,22 +49,6 @@ class GalleryFragment : Fragment() {
         // Configura el adaptador para el RecyclerView con la lista de mapas
         val adapter = MapaAdapter(requireContext(), controlador!!.listMapas())
         recyclerView!!.adapter = adapter
-
-        // Añade un ScrollListener para cargar más elementos al hacer scroll
-        recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                // Imprime mensajes de registro para verificar si el evento de desplazamiento se está llamando
-                Log.d("ScrollListener", "onScrolled: $dy")
-
-                // Comprueba si ha llegado al final del RecyclerView
-                if (!recyclerView.canScrollVertically(1)) {
-                    // Aquí puedes cargar más elementos o realizar alguna acción al llegar al final
-                    Log.d("ScrollListener", "End of list reached!")
-                }
-            }
-        })
 
         return root
     }

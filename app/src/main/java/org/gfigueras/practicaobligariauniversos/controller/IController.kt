@@ -16,5 +16,9 @@ interface IController {
     suspend fun signUp(username:String, email:String, password:String):Int
     suspend fun getUser(username: String, password: String): String
 
+    suspend fun changePassword(username:String, password: String, passwordNew: String, passwordNewAuth:String):Int
+    suspend fun setUniverseFav(username: String, password: String,universo: Universo):Boolean
+
+
 
 }

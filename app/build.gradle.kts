@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "org.gfigueras.practicaobligariauniversos"
-        minSdk = 33
+        minSdk = 31
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -66,6 +66,9 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.3.1")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("com.airbnb.android:lottie:6.1.0")
+
+
     implementation(libs.androidx.activity)
     implementation(libs.androidx.gridlayout)
     testImplementation(libs.junit)

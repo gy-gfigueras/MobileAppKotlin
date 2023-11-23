@@ -15,6 +15,7 @@ class Controller(context: Context): IController {
 
     companion object{
         public var userSaved: User? = null
+        public var universoSaved:Universo? = null
 
     }
     init{
@@ -63,6 +64,23 @@ class Controller(context: Context): IController {
 
     override suspend fun getUser(username: String, password: String): String{
         return daousers!!.getUser(username, password)
+    }
+
+    override suspend fun changePassword(
+        username: String,
+        password: String,
+        passwordNew: String,
+        passwordNewAuth: String
+    ): Int {
+        return daousers!!.changePassword(username,password,passwordNew,passwordNewAuth)
+    }
+
+    override suspend fun setUniverseFav(
+        username: String,
+        password: String,
+        universo: Universo
+    ): Boolean {
+        return daousers!!.setUniverseFav(username,password,universo)
     }
 
 

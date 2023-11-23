@@ -16,9 +16,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/background"
+            android:background="@color/nav_background"
+            app:navigationIcon="@drawable/menu"
             app:popupTheme="@style/Theme.PracticaObligatorioUniversos.PopupOverlay"
-            app:titleTextColor="@color/light_gold" />
+            app:titleTextColor="@color/light_gold"
+            style="@style/NavigationDrawerTextStyle"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

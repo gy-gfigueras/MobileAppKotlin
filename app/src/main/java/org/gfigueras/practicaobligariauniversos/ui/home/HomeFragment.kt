@@ -1,12 +1,15 @@
 package org.gfigueras.practicaobligariauniversos.ui.home
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.gfigueras.practicaobligariauniversos.MainActivity
 import org.gfigueras.practicaobligariauniversos.R
 import org.gfigueras.practicaobligariauniversos.controller.Controller
 import org.gfigueras.practicaobligariauniversos.controller.IController
@@ -24,14 +27,17 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root = binding.root
         controlador = Controller(requireContext())
         recyclerView = binding.recyclerView
+        (activity as? MainActivity)?.setToolbarHamburgerIcon(R.drawable.menu)
+
 
         // Configura el RecyclerView con un GridLayoutManager y un adaptador
         recyclerView!!.layoutManager = GridLayoutManager(requireContext(), 1)
+        recyclerView!!.isNestedScrollingEnabled = false  // Deshabilita el desplazamiento anidado
         recyclerView!!.addItemDecoration(
             GridSpacingItemDecoration(
                 1,
@@ -44,24 +50,11 @@ class HomeFragment : Fragment() {
         val adapter = UniversoAdapter(requireContext(), controlador!!.listUniversos())
         recyclerView!!.adapter = adapter
 
-        // Añade un ScrollListener para cargar más elementos al hacer scroll
-        recyclerView!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
 
-                // Imprime mensajes de registro para verificar si el evento de desplazamiento se está llamando
-                Log.d("ScrollListener", "onScrolled: $dy")
-
-                // Comprueba si ha llegado al final del RecyclerView
-                if (!recyclerView.canScrollVertically(1)) {
-                    // Aquí puedes cargar más elementos o realizar alguna acción al llegar al final
-                    Log.d("ScrollListener", "End of list reached!")
-                }
-            }
-        })
 
         return root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

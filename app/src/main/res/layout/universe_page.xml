@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_nav">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ImageView
+            android:id="@+id/imagen_universo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#B48E4F"
+            android:paddingBottom="5dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/titulo_universo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_file"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="TextView"
+            android:textColor="@color/light_gold"
+            android:textSize="33sp" />
+
+        <TextView
+            android:id="@+id/descripcion_universo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_file"
+            android:gravity="center_horizontal|top"
+            android:paddingLeft="20dp"
+            android:paddingTop="0dp"
+            android:paddingRight="20dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ultricies libero non risus laoreet, sed blandit dui egestas. Duis lectus sapien, placerat quis ante ut, luctus volutpat mi. Nullam nec posuere mi, nec feugiat libero. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas ac dui nec nibh fermentum suscipit eget ac arcu. Etiam eget lectus orci. Integer sodales arcu in nulla convallis bibendum. In ornare elit eget erat malesuada euismod. Integer eu orci imperdiet, dignissim arcu sit amet, ultricies massa. Donec efficitur turpis sed urna lacinia v"
+            android:textColor="@color/light_gold"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

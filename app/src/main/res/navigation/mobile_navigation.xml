@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="org.gfigueras.practicaobligariauniversos.ui.home.HomeFragment"
-        android:label="Mapas"
+        android:label="Universos"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
         android:name="org.gfigueras.practicaobligariauniversos.ui.gallery.GalleryFragment"
-        android:label="Universos"
+        android:label="Mapas"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
@@ -22,4 +22,5 @@
         android:name="org.gfigueras.practicaobligatorio.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
 </navigation>

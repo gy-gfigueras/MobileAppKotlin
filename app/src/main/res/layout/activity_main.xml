@@ -23,5 +23,7 @@
         app:itemIconTint="@color/medium_gold"
         app:headerLayout="@layout/nav_header_main"
         app:itemTextColor="@color/light_gold"
+        app:itemTextAppearance="@font/font_file"
         app:menu="@menu/activity_main_drawer" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -11,6 +11,11 @@
     <dimen name="text_size">8sp</dimen>
     <dimen name="margin_top_2">24dp</dimen>
     <dimen name="grid_spacing">4dp</dimen>
+    <dimen name="text_size_default">16sp</dimen>
+    <dimen name="text_size_smaller">14sp</dimen>
+
+    <!-- Longitud máxima del nombre -->
+    <integer name="max_name_length">10</integer>
 
 
 </resources>

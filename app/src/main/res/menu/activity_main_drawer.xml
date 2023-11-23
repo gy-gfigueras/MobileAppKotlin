@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     app:headerLayout="@layout/nav_header_main"
     app:itemIconTint="@color/medium_gold"
+    app:itemTextAppearance="@font/font_file"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">

@@ -1,7 +1,9 @@
 package org.gfigueras.practicaobligariauniversos.model.DAOUsers
 
+import android.util.Log
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import org.gfigueras.practicaobligariauniversos.model.entities.Universo
 
 class DAOUsers : IDAOUsers {
     private val client = HttpClient()
@@ -46,6 +48,40 @@ class DAOUsers : IDAOUsers {
         }
     }
 
+    override suspend fun changePassword(username: String, password: String, passwordNew: String, passwordNewAuth: String): Int {
+        val url = "$URL/newPassword/$username/$password/$passwordNew"
+
+        return try {
+            val client = HttpClient()
+            val loginSuccess = this.login(username, password)
+
+            when {
+                loginSuccess && passwordNew == passwordNewAuth -> {
+                    val result = client.get<String>(url).toBoolean()
+                    if (result) 0 else -3 // -3 si no se cambió la contraseña después de la verificación exitosa
+                }
+                passwordNew != passwordNewAuth -> -1 // Las contraseñas no coinciden
+                !loginSuccess -> -2 // La contraseña actual es incorrecta
+                else -> -3 // Caso genérico
+            }
+        } catch (e: Exception) {
+            -4 // Error en la base de datos
+            Log.i("ERRROOOOR", e.printStackTrace().toString())
+        }
+    }
+
+    override suspend fun setUniverseFav(username: String, password: String, universo: Universo):Boolean {
+        val url = "$URL/newPassword/$username/$password/${universo.getCodigo()}"
+        val client = HttpClient()
+        try {
+            val result = client.get<String>(url)
+            return result.toBoolean()
+        } catch (e: Exception) {
+            return false
+        } finally {
+            client.close()
+        }
+    }
 
 
     override fun closeClient() {

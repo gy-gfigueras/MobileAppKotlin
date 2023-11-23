@@ -10,4 +10,20 @@
     <string name="menu_home">Universos</string>
     <string name="menu_gallery">Mapas</string>
     <string name="menu_slideshow">Usuario</string>
+
+    <string-array name="Mundos">
+        <item>None</item>
+        <item>Asgard</item>
+        <item>Alfheim</item>
+        <item>Vanaheim</item>
+        <item>Svartalfheim</item>
+        <item>Midgard</item>
+        <item>Jötunheim</item>
+        <item>Muspelheim</item>
+        <item>Niflheim</item>
+        <item>Helheim</item>
+        <item>Ginnungagap</item>
+        <!-- Agrega más elementos según sea necesario -->
+    </string-array>
 </resources>
+
