@@ -30,6 +30,7 @@ import org.gfigueras.practicaobligariauniversos.controller.Controller
 import org.gfigueras.practicaobligariauniversos.controller.IController
 import org.gfigueras.practicaobligariauniversos.databinding.ActivityMainBinding
 import org.w3c.dom.Text
+import java.lang.NullPointerException
 import java.lang.reflect.Type
 
 @Suppress("DEPRECATION")
@@ -56,33 +57,12 @@ class MainActivity : AppCompatActivity() {
 
         navView.setBackgroundColor(getColor(R.color.nav_background))
 
-
-
         navigationView = findViewById<NavigationView>(R.id.nav_view)
         val menu = navigationView!!.menu
         val typeface = ResourcesCompat.getFont(this, R.font.font_file)
 
-
-
-        for(i in 0 until menu.size()){
-            val menuItem = menu.getItem(i)
-            val title = menuItem.title.toString()
-
-            // Crea un SpannableString para aplicar el tipo de letra
-            val spannable = SpannableString(title)
-            spannable.setSpan(StyleSpan(Typeface.NORMAL), 0, spannable.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-            spannable.setSpan(CustomTypefaceSpan("", typeface), 0, spannable.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-
-            // Establece el título del elemento del menú con el SpannableString
-            menuItem.title = spannable
-        }
-
         fondoNav = navigationView!!.getHeaderView(0).findViewById(R.id.fondoNav)
 
-        Glide.with(this)
-            .load(controlador!!.getUniverso(Controller.userSaved!!.getFavoriteUniverso()!!.getCodigo())!!.getImagen())
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(fondoNav!!)
 
 
         val toggle = ActionBarDrawerToggle(
@@ -106,8 +86,6 @@ class MainActivity : AppCompatActivity() {
         email.text = Controller.userSaved!!.getEmail()
         role.text = Controller.userSaved!!.getRole().toUpperCase()
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
@@ -127,6 +105,19 @@ class MainActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
 
+
+        for(i in 0 until menu.size()){
+            val menuItem = menu.getItem(i)
+            val title = menuItem.title.toString()
+
+            // Crea un SpannableString para aplicar el tipo de letra
+            val spannable = SpannableString(title)
+            spannable.setSpan(StyleSpan(Typeface.NORMAL), 0, spannable.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            spannable.setSpan(CustomTypefaceSpan("", typeface), 0, spannable.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+
+            // Establece el título del elemento del menú con el SpannableString
+            menuItem.title = spannable
+        }
 
 }
 
@@ -181,6 +172,23 @@ class MainActivity : AppCompatActivity() {
     fun setToolbarHamburgerIcon(iconResId: Int) {
         val actionBar = supportActionBar
         actionBar?.setHomeAsUpIndicator(iconResId)
+    }
+
+
+    fun changeBackground(){
+        try{
+            if(Controller.userSaved!!.getFavoriteUniverso()!!.getCodigo() in 1..10){
+                Glide.with(this)
+                    .load(controlador!!.getUniverso(Controller.userSaved!!.getFavoriteUniverso()!!.getCodigo())!!.getImagen())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(fondoNav!!)
+            }else if (Controller.userSaved!!.getFavoriteUniverso() == null){
+                fondoNav!!.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.back_nav))
+            }
+        }catch (e: NullPointerException){
+            fondoNav!!.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.back_nav))
+
+        }
     }
 
 }

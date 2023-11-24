@@ -17,7 +17,7 @@ interface IController {
     suspend fun getUser(username: String, password: String): String
 
     suspend fun changePassword(username:String, password: String, passwordNew: String, passwordNewAuth:String):Int
-    suspend fun setUniverseFav(username: String, password: String,universo: Universo):Boolean
+    suspend fun setUniverseFav(username: String,universo: Universo):Boolean
 
 
 

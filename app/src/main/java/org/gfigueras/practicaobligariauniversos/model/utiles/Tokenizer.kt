@@ -18,8 +18,7 @@ object Tokenizer {
         val parametros = text.split(",")
         val controlador: IController = Controller(context)
         if(parametros.get(3).toInt() == -1){
-
-            return User(parametros[0], parametros[1], parametros[2], controlador.getUniverso(1))
+            return User(parametros[0], parametros[1], parametros[2], null)
         }else{
             return User(parametros[0], parametros[1], parametros[2], controlador.getUniverso(parametros.get(3).toInt()))
 

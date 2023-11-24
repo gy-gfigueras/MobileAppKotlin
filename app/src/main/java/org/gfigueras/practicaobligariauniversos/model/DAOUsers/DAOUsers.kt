@@ -70,9 +70,11 @@ class DAOUsers : IDAOUsers {
         }
     }
 
-    override suspend fun setUniverseFav(username: String, password: String, universo: Universo):Boolean {
-        val url = "$URL/newPassword/$username/$password/${universo.getCodigo()}"
+    override suspend fun setUniverseFav(username: String, universo: Universo):Boolean {
+        val url = "$URL/setUniverseFav/$username/${universo.getCodigo()}"
         val client = HttpClient()
+        Log.e("URL", url.toString())
+
         try {
             val result = client.get<String>(url)
             return result.toBoolean()

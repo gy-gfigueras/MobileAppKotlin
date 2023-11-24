@@ -2,8 +2,6 @@ package org.gfigueras.practicaobligatorio.ui.slideshow
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -141,30 +139,35 @@ class SlideshowFragment : Fragment() {
         }
 
 
-            menuMapas!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parentView: AdapterView<*>,
-                    selectedItemView: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    lifecycleScope.launch {
-                        Controller.userSaved!!.setFavoriteUniverso(
-                            controlador!!.getUniverso(
-                                position
-                            )
-                        )
-                        controlador!!.setUniverseFav(
+        menuMapas!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parentView: AdapterView<*>,
+                selectedItemView: View?,
+                position: Int,
+                id: Long
+            ) {
+                lifecycleScope.launch {
+                    val newSelectedUniverso = controlador!!.getUniverso(position)
+
+                    if (Controller.userSaved!!.getFavoriteUniverso() == null) {
+                        Controller.userSaved!!.setFavoriteUniverso(newSelectedUniverso)
+                    } else {
+                        Controller.userSaved!!.setFavoriteUniverso(newSelectedUniverso)
+                        val result = controlador!!.setUniverseFav(
                             Controller.userSaved!!.getUsername(),
-                            actualPasswd!!.editText!!.text.toString(),
-                            controlador!!.getUniverso(position)!!
+                            Controller.userSaved!!.getFavoriteUniverso()!!
                         )
+                        Log.i("BOOLEAN", result.toString())
                     }
                 }
-
-                override fun onNothingSelected(parentView: AdapterView<*>) {
-                }
             }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Aquí puedes agregar código para manejar el caso en el que no se selecciona nada.
+            }
+        }
+
+
 
         return root
     }

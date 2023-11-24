@@ -77,10 +77,9 @@ class Controller(context: Context): IController {
 
     override suspend fun setUniverseFav(
         username: String,
-        password: String,
         universo: Universo
     ): Boolean {
-        return daousers!!.setUniverseFav(username,password,universo)
+        return daousers!!.setUniverseFav(username,universo)
     }
 
 
