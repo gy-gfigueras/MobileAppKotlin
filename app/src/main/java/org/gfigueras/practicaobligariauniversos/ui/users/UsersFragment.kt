@@ -18,6 +18,8 @@ import org.gfigueras.practicaobligariauniversos.R
 import org.gfigueras.practicaobligariauniversos.controller.Controller
 import org.gfigueras.practicaobligariauniversos.controller.IController
 import org.gfigueras.practicaobligariauniversos.databinding.FragmentUsersBinding
+import org.gfigueras.practicaobligariauniversos.model.entities.User
+import org.gfigueras.practicaobligariauniversos.model.utiles.Tokenizer
 
 class UsersFragment : Fragment() {
     private var _binding: FragmentUsersBinding? = null
@@ -51,7 +53,6 @@ class UsersFragment : Fragment() {
         // Establece el índice seleccionado en el Spinner
         spinner.setSelection(selectedUsernameIndex, false)
 
-        // Maneja la selección en el Spinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>,
@@ -59,7 +60,6 @@ class UsersFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                // Actualiza el índice seleccionado
                 selectedUsernameIndex = position
             }
 
@@ -73,22 +73,24 @@ class UsersFragment : Fragment() {
                 val selectedUsername = nameList[selectedUsernameIndex]
                 val username = Controller.userSaved?.getUsername()
                 if (username != null && controlador != null) {
-                   if( controlador!!.deleteUser(username, username.lowercase(), selectedUsername.toString())) {
-                       val dialog = AlertDialog.Builder(requireContext())
-                           .setTitle("Correcto")
-                           .setMessage("Usuario borrado Correctamente")
-                           .setPositiveButton("Aceptar", null)
-                           .create()
-                           .show()
-
-                   }else{
-                       val dialog = AlertDialog.Builder(requireContext())
-                           .setTitle("Incorrecto")
-                           .setMessage("El usuario no ha podido borrarse")
-                           .setPositiveButton("Aceptar", null)
-                           .create()
-                           .show()
-                   }
+                    if (controlador!!.deleteUser(username, username.lowercase(), selectedUsername.toString())) {
+                        val dialog = AlertDialog.Builder(requireContext())
+                            .setTitle("Correcto")
+                            .setMessage("Usuario borrado Correctamente")
+                            .setPositiveButton("Aceptar") { _, _ ->
+                                // Llama al método para actualizar la lista después de borrar
+                                actualizarListaUsuarios()
+                            }
+                            .create()
+                            .show()
+                    } else {
+                        val dialog = AlertDialog.Builder(requireContext())
+                            .setTitle("Incorrecto")
+                            .setMessage("El usuario no ha podido borrarse")
+                            .setPositiveButton("Aceptar", null)
+                            .create()
+                            .show()
+                    }
                 }
             }
         }
@@ -100,6 +102,30 @@ class UsersFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    private fun actualizarListaUsuarios() {
+        lifecycleScope.launch {
+            try {
+                val nuevaListaUsuarios = Tokenizer.tokenizarUsers(controlador!!.getUsers()!!)
+
+                val adapter = binding.spinner.adapter as ArrayAdapter<String>
+                adapter.clear()
+                nuevaListaUsuarios.forEach { user ->
+                    adapter.add(user.getUsername())
+                }
+
+                val seleccion = if (nuevaListaUsuarios.isEmpty()) -1 else 0
+                binding.spinner.setSelection(seleccion, false)
+
+                selectedUsernameIndex = selectedUsernameIndex.coerceIn(0, nuevaListaUsuarios.size - 1)
+
+            } catch (e: Exception) {
+                Log.e("ACTUALIZAR LISTA", "Error al actualizar la lista de usuarios: ${e.message}")
+            }
+        }
+    }
+
+
+
 
 }
 

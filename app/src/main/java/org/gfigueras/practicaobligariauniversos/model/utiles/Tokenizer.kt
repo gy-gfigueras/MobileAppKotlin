@@ -33,22 +33,6 @@ object Tokenizer {
         }
     }
 
-
-    fun tokenizar2(text: String): User {
-        val parametros = text.split(",")
-        return if (parametros[3].toInt() == -1) {
-            User(parametros[0], parametros[1], parametros[2], null)
-        } else {
-            User(
-                parametros[0],
-                parametros[1],
-                parametros[2],
-                controlador.getUniverso(parametros[3].toInt())
-            )
-        }
-    }
-
-    // Método tokenizarUsers para convertir un bloque de texto en una lista de usuarios
     fun tokenizarUsers(text: String): MutableList<User> {
         val lineas = text.split("\n")
         val lista: MutableList<User> = mutableListOf()

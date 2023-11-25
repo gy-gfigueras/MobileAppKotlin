@@ -7,34 +7,35 @@ import org.gfigueras.practicaobligariauniversos.model.entities.Universo
 
 class DAOUsers : IDAOUsers {
     private val client = HttpClient()
-    //private val URL:String = "https://gfserver.onrender.com"
-    private val URL:String = "https://gfserver-dev-rhbq.1.ie-1.fl0.io/"
 
-    override suspend fun login(username: String, password: String):Boolean {
-            val url = "$URL/login/$username/$password"
-            val client = HttpClient()
+    private val URL: String = "https://gfserver-dev-rhbq.1.ie-1.fl0.io/"
 
-            try {
-                return client.get<String>(url).toBoolean()
-            }catch (e: Exception){
-                return false
-            } finally {
-                client.close()
-            }
+    override suspend fun login(username: String, password: String): Boolean {
+        val url = "$URL/login/$username/$password"
+        val client = HttpClient()
+
+        try {
+            return client.get<String>(url).toBoolean()
+        } catch (e: Exception) {
+            return false
+        } finally {
+            client.close()
+        }
     }
 
     override suspend fun signUp(username: String, email: String, password: String): Int {
-            val url = "$URL/signup/$username/$email/$password"
-            val client = HttpClient()
-            try {
-                return client.get<String>(url).toInt()
+        val url = "$URL/signup/$username/$email/$password"
+        val client = HttpClient()
+        try {
+            return client.get<String>(url).toInt()
 
-            }catch (e: Exception){
-                return -1
-            } finally {
-                client.close()
-            }
+        } catch (e: Exception) {
+            return -1
+        } finally {
+            client.close()
+        }
     }
+
     override suspend fun getUser(username: String, password: String): String {
         val url = "$URL/user/$username/$password"
         val client = HttpClient()
@@ -49,8 +50,11 @@ class DAOUsers : IDAOUsers {
     }
 
 
-
-    override suspend fun changePassword(username: String, password: String, passwordNew: String): Int {
+    override suspend fun changePassword(
+        username: String,
+        password: String,
+        passwordNew: String
+    ): Int {
         val url = "$URL/newPassword/$username/$password/$passwordNew"
 
         return try {
@@ -58,10 +62,11 @@ class DAOUsers : IDAOUsers {
             val loginSuccess = this.login(username, password)
 
             when {
-                loginSuccess && passwordNew != ""-> {
+                loginSuccess && passwordNew != "" -> {
                     val result = client.get<String>(url).toBoolean()
                     if (result) 0 else -3 // -3 si no se cambió la contraseña después de la verificación exitosa
                 }
+
                 !loginSuccess -> -1 // La contraseña actual es incorrecta
                 else -> -2 // Caso genérico
             }
@@ -71,11 +76,11 @@ class DAOUsers : IDAOUsers {
         }
     }
 
-    override suspend fun setUniverseFav(username: String, universo: Universo?):Boolean {
-        var universoSeleccionado:Int = 0
-        if(universo == null){
+    override suspend fun setUniverseFav(username: String, universo: Universo?): Boolean {
+        var universoSeleccionado: Int = 0
+        if (universo == null) {
             universoSeleccionado = -1
-        }else{
+        } else {
             universoSeleccionado = universo.getCodigo()
         }
         val url = "$URL/setUniverseFav/$username/${universoSeleccionado}"
@@ -95,14 +100,31 @@ class DAOUsers : IDAOUsers {
         username: String,
         password: String,
         usernameToDelete: String
-    ): Boolean {
+    ): Boolean{
         val url = "$URL/deleteUser/admin/admin/$usernameToDelete"
         val client = HttpClient()
-        try {
+        return try {
             val result = client.get<String>(url)
-            return result.toBoolean()
+            when (result.toInt()) {
+                0 -> {
+                    true
+                }
+                -1 -> {
+                    // EL USUARIO PARA BORRAR NO EXISTE
+                    false
+                }
+                -2, -3, -4 -> {
+                    // EL USUARIO NO ES ADMINISTRADOR
+                    false
+                }
+                else -> {
+                    // Handle other result codes if needed
+                    false
+                }
+            }
         } catch (e: Exception) {
-            return false
+            // Handle exceptions, e.g., network issues
+            false
         } finally {
             client.close()
         }

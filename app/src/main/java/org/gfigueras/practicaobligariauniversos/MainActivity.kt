@@ -82,6 +82,10 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        lifecycleScope.launch {
+            updateUsuarios()
+        }
+
         // Cambia el color del icono de la hamburguesa
         binding.appBarMain.toolbar.navigationIcon?.setColorFilter(resources.getColor(R.color.light_gold), PorterDuff.Mode.SRC_ATOP)
 
@@ -107,8 +111,6 @@ class MainActivity : AppCompatActivity() {
             usersItem.isVisible = false
         }else{
             usersItem.isVisible = true
-
-
         }
 
         // Configuración de la barra de navegación
@@ -132,17 +134,6 @@ class MainActivity : AppCompatActivity() {
 
         // Personalización de elementos del menú
         customizeMenuItems()
-        lifecycleScope.launch {
-            val usersString = controlador!!.getUsers()
-
-            if (!usersString.isNullOrEmpty()) {
-                Controller.usuarios = Tokenizer.tokenizarUsers(usersString)
-                Log.i("USERS", usersString)
-            } else {
-                // Manejar el caso en el que getUsers() devuelve null o una cadena vacía
-                Log.e("ERROR", "La cadena de usuarios es nula o vacía.")
-            }
-        }
 
     }
     //METHODS
@@ -158,11 +149,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startActivity(Intent(this,LoginActivity::class.java))
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        finish()
 
+        finish()
     }
+
 
     // Clase interna para aplicar un tipo de letra personalizado
     private class CustomTypefaceSpan(family: String?, private val newType: Typeface?) :
@@ -223,10 +216,7 @@ class MainActivity : AppCompatActivity() {
         try {
             // Verifica si el universo favorito del usuario está en el rango de 1 a 10
             if (Controller.userSaved?.getFavoriteUniverso()?.getCodigo() in 1..10) {
-                Glide.with(this)
-                    .load(controlador?.getUniverso(Controller.userSaved?.getFavoriteUniverso()?.getCodigo()!!)!!.getImagen())
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(fondoNav!!)
+                Glide.with(this).load(controlador?.getUniverso(Controller.userSaved?.getFavoriteUniverso()?.getCodigo()!!)!!.getImagen()).transition(DrawableTransitionOptions.withCrossFade()).into(fondoNav!!)
                 applyDarknessFilter(fondoNav!!, 0.7f)
             } else if (Controller.userSaved?.getFavoriteUniverso() == null) {
                 fondoNav!!.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.back_nav))
@@ -246,5 +236,20 @@ class MainActivity : AppCompatActivity() {
 
         val colorFilter = ColorMatrixColorFilter(colorMatrix)
         imageView.colorFilter = colorFilter
+    }
+    //ACTUALIZAR USUARIOS
+    private suspend fun updateUsuarios() {
+        try {
+            val usersString = controlador?.getUsers()
+
+            if (!usersString.isNullOrEmpty()) {
+                Controller.usuarios = Tokenizer.tokenizarUsers(usersString)
+                Log.i("USERS", usersString)
+            } else {
+                Log.e("ERROR", "La cadena de usuarios es nula o vacía.")
+            }
+        } catch (e: Exception) {
+            Log.e("ERROR", "Error al obtener usuarios: ${e.message}")
+        }
     }
 }
