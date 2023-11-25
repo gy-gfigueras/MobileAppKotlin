@@ -16,6 +16,7 @@ class Controller(context: Context): IController {
     companion object{
         public var userSaved: User? = null
         public var universoSaved:Universo? = null
+        public var usuarios:MutableList<User>? = null
 
     }
     init{
@@ -69,17 +70,29 @@ class Controller(context: Context): IController {
     override suspend fun changePassword(
         username: String,
         password: String,
-        passwordNew: String,
-        passwordNewAuth: String
+        passwordNew: String
     ): Int {
-        return daousers!!.changePassword(username,password,passwordNew,passwordNewAuth)
+        return  daousers!!.changePassword(username,password,passwordNew)
     }
+
 
     override suspend fun setUniverseFav(
         username: String,
-        universo: Universo
+        universo: Universo?
     ): Boolean {
         return daousers!!.setUniverseFav(username,universo)
+    }
+
+    override suspend fun getUsers(): String? {
+        return daousers!!.getUsers()
+    }
+
+    override suspend fun deleteUser(
+        username: String,
+        password: String,
+        usernameToDelete: String
+    ): Boolean {
+        return daousers!!.deleteUser(username,password,usernameToDelete)
     }
 
 

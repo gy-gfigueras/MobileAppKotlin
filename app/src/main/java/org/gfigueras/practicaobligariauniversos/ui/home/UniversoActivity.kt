@@ -15,6 +15,7 @@ class UniversoActivity: AppCompatActivity() {
     private var titulo:TextView? = null
     private var descripcion:TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.universe_page)
         controlador = Controller(this)
@@ -32,6 +33,6 @@ class UniversoActivity: AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Controller.universoSaved = null
-        overridePendingTransition(R.anim.scale_up, R.anim.scale_down)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 }

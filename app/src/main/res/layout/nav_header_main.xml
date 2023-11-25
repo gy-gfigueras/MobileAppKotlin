@@ -34,7 +34,8 @@
             android:paddingLeft="0dp"
             android:text="@string/nav_header_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/medium_gold" />
+            android:textColor="@color/medium_gold"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/emailSaved"
@@ -43,7 +44,8 @@
             android:fontFamily="@font/font_file"
             android:paddingLeft="0dp"
             android:text="@string/nav_header_subtitle"
-            android:textColor="@color/medium_gold" />
+            android:textColor="@color/medium_gold"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/roleSaved"
@@ -52,7 +54,8 @@
             android:fontFamily="@font/font_file"
             android:paddingLeft="0dp"
             android:text="TextView"
-            android:textColor="@color/medium_gold" />
+            android:textColor="@color/medium_gold"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </FrameLayout>

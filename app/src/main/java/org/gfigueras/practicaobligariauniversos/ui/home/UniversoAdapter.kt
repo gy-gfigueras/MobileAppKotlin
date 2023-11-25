@@ -3,7 +3,6 @@ package org.gfigueras.practicaobligariauniversos.ui.home
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.service.controls.Control
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +12,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import org.gfigueras.practicaobligariauniversos.LoginActivity
 import org.gfigueras.practicaobligariauniversos.R
 import org.gfigueras.practicaobligariauniversos.controller.Controller
-import org.gfigueras.practicaobligariauniversos.controller.IController
 import org.gfigueras.practicaobligariauniversos.model.entities.Universo
 
 class UniversoAdapter(private val context: Context, private val universos: List<Universo>) :
@@ -57,11 +53,6 @@ class UniversoAdapter(private val context: Context, private val universos: List<
         return universos.size
     }
 
-    private fun mostrarDialogo(universo: Universo) {
-        val universoDialog: UniverseDialog = UniverseDialog(context, universo)
-        universoDialog.show()
-    }
-
     private fun setAnimation(view: View, position: Int) {
         val slideIn: Animation = AnimationUtils.loadAnimation(context, R.anim.slide)
         view.startAnimation(slideIn)
@@ -69,7 +60,7 @@ class UniversoAdapter(private val context: Context, private val universos: List<
 
     private fun openActivity(context: Context) {
         val intent = Intent(context, UniversoActivity::class.java)
-        val options = ActivityOptionsCompat.makeCustomAnimation(context, R.anim.scale_up, R.anim.scale_down)
+        val options = ActivityOptionsCompat.makeCustomAnimation(context, R.anim.fade_in, R.anim.fade_out)
         ActivityCompat.startActivity(context as Activity, intent, options.toBundle())
     }
 }

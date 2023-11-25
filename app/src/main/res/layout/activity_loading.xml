@@ -12,6 +12,7 @@
         app:lottie_rawRes="@raw/loading"
         app:lottie_autoPlay="true"
         android:layout_centerInParent="true"
-        android:backgroundTint="@color/black"/>
+        android:backgroundTint="@color/black"
+        app:lottie_speed="1.5"/>
 
 </RelativeLayout>

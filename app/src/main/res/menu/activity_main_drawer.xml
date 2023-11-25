@@ -24,5 +24,9 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Usuario" />
+        <item
+            android:id="@+id/nav_users"
+            android:icon="@drawable/users_svgrepo_com"
+            android:title="Usuarios" />
     </group>
 </menu>

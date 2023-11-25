@@ -13,5 +13,6 @@
     <color name="card_color">#12FFFFFF</color>
     <color name="alert_color">#75000000</color>
     <color name="nav_background">#121212</color>
+    <color name="brightness_filter">#67000000</color>
 
 </resources>

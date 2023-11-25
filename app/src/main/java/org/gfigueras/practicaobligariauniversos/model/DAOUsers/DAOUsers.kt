@@ -48,7 +48,9 @@ class DAOUsers : IDAOUsers {
         }
     }
 
-    override suspend fun changePassword(username: String, password: String, passwordNew: String, passwordNewAuth: String): Int {
+
+
+    override suspend fun changePassword(username: String, password: String, passwordNew: String): Int {
         val url = "$URL/newPassword/$username/$password/$passwordNew"
 
         return try {
@@ -56,13 +58,12 @@ class DAOUsers : IDAOUsers {
             val loginSuccess = this.login(username, password)
 
             when {
-                loginSuccess && passwordNew == passwordNewAuth -> {
+                loginSuccess && passwordNew != ""-> {
                     val result = client.get<String>(url).toBoolean()
                     if (result) 0 else -3 // -3 si no se cambió la contraseña después de la verificación exitosa
                 }
-                passwordNew != passwordNewAuth -> -1 // Las contraseñas no coinciden
-                !loginSuccess -> -2 // La contraseña actual es incorrecta
-                else -> -3 // Caso genérico
+                !loginSuccess -> -1 // La contraseña actual es incorrecta
+                else -> -2 // Caso genérico
             }
         } catch (e: Exception) {
             -4 // Error en la base de datos
@@ -70,16 +71,51 @@ class DAOUsers : IDAOUsers {
         }
     }
 
-    override suspend fun setUniverseFav(username: String, universo: Universo):Boolean {
-        val url = "$URL/setUniverseFav/$username/${universo.getCodigo()}"
+    override suspend fun setUniverseFav(username: String, universo: Universo?):Boolean {
+        var universoSeleccionado:Int = 0
+        if(universo == null){
+            universoSeleccionado = -1
+        }else{
+            universoSeleccionado = universo.getCodigo()
+        }
+        val url = "$URL/setUniverseFav/$username/${universoSeleccionado}"
         val client = HttpClient()
         Log.e("URL", url.toString())
-
         try {
             val result = client.get<String>(url)
             return result.toBoolean()
         } catch (e: Exception) {
             return false
+        } finally {
+            client.close()
+        }
+    }
+
+    override suspend fun deleteUser(
+        username: String,
+        password: String,
+        usernameToDelete: String
+    ): Boolean {
+        val url = "$URL/deleteUser/admin/admin/$usernameToDelete"
+        val client = HttpClient()
+        try {
+            val result = client.get<String>(url)
+            return result.toBoolean()
+        } catch (e: Exception) {
+            return false
+        } finally {
+            client.close()
+        }
+    }
+
+    override suspend fun getUsers(): String? {
+        val url = "$URL/getUsers/"
+        val client = HttpClient()
+        try {
+            val result = client.get<String>(url)
+            return result!!.toString()
+        } catch (e: Exception) {
+            return null
         } finally {
             client.close()
         }

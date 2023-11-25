@@ -19,8 +19,13 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="org.gfigueras.practicaobligatorio.ui.slideshow.SlideshowFragment"
+        android:name="org.gfigueras.practicaobligariauniversos.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_users"
+        android:name="org.gfigueras.practicaobligariauniversos.ui.users.UsersFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_users" />
 
 </navigation>

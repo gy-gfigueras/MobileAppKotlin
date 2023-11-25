@@ -23,6 +23,7 @@ import org.gfigueras.practicaobligariauniversos.model.DAOUsers.DAOUsers
 import org.gfigueras.practicaobligariauniversos.model.DAOUsers.IDAOUsers
 import org.gfigueras.practicaobligariauniversos.model.utiles.Tokenizer
 
+
 class LoginActivity : AppCompatActivity() {
     private var buttonGithub: ImageButton? = null
     private var buttonInstagram: ImageButton? = null
@@ -178,7 +179,8 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoadingScreen() {
         val loadingIntent = Intent(this, LoadingActivity::class.java)
         startActivity(loadingIntent)
-        overridePendingTransition(R.anim.scale_up, R.anim.scale_down)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()
     }
+
 }

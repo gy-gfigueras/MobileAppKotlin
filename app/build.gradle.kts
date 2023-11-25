@@ -9,9 +9,10 @@ android {
     namespace = "org.gfigueras.practicaobligariauniversos"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "org.gfigueras.practicaobligariauniversos"
-        minSdk = 31
+        minSdk = 30
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -52,7 +53,6 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
-    implementation("com.airbnb.android:lottie:6.1.0")
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("io.ktor:ktor-client-android:1.6.7")
     implementation("io.ktor:ktor-client-core:1.6.7")

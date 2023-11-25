@@ -16,7 +16,7 @@ class LoadingActivity : AppCompatActivity() {
             val mainIntent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
             finish()  // Finaliza la actividad actual
-            overridePendingTransition(R.anim.scale_up, R.anim.scale_down)
-        }, 2200)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        }, 1400)
     }
 }

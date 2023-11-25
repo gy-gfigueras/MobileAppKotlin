@@ -24,6 +24,7 @@
         app:headerLayout="@layout/nav_header_main"
         app:itemTextColor="@color/light_gold"
         app:itemTextAppearance="@font/font_file"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer"
+        style="@style/NavigationDrawerTextStyle"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

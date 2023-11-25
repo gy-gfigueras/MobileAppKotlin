@@ -28,6 +28,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root = binding.root
         controlador = Controller(requireContext())
@@ -49,8 +50,6 @@ class HomeFragment : Fragment() {
         // Configura el adaptador para el RecyclerView
         val adapter = UniversoAdapter(requireContext(), controlador!!.listUniversos())
         recyclerView!!.adapter = adapter
-
-
 
         return root
     }

@@ -23,6 +23,14 @@
         <item name="android:fontFamily">@font/font_file</item>
     </style>
 
+    <style name="MyNavigationViewStyle" parent="Widget.Design.NavigationView">
+        <item name="android:textAppearance">@style/MyTextAppearance</item>
+    </style>
+
+    <style name="MyTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:fontFamily">@font/font_file</item>
+    </style>
+
 
 
 
