@@ -27,7 +27,6 @@ class UniversoActivity: AppCompatActivity() {
         titulo!!.text = Controller.universoSaved!!.getNombre()
         descripcion!!.text = Controller.universoSaved!!.getDescripcion()
 
-
     }
 
     override fun onBackPressed() {

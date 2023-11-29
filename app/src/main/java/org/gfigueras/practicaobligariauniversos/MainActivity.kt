@@ -1,12 +1,14 @@
 package org.gfigueras.practicaobligariauniversos
 
 import android.app.ActivityOptions
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.service.controls.Control
 import android.text.Spannable
@@ -15,6 +17,7 @@ import android.text.TextPaint
 import android.text.style.StyleSpan
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -64,6 +67,9 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         controlador = Controller(this)
+
+
+
 
         // Configuración del fondo de la barra de navegación
         navView.setBackgroundColor(getColor(R.color.nav_background))
@@ -148,12 +154,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
 
-        finish()
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("¿Estás seguro de que quieres volver al inicio de sesión?")
+        builder.setPositiveButton("Sí") { _, _ ->
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            finish()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            // Si el usuario cancela, cierra el cuadro de diálogo
+            dialog.dismiss()
+        }
+        val dialog = builder.create().show()
+
+        // super.onBackPressed()
+
     }
 
 
@@ -251,5 +269,19 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e("ERROR", "Error al obtener usuarios: ${e.message}")
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_settings -> {
+                abrirURL("https://www.linkedin.com/in/guillermo-figueras-jim%C3%A9nez-b2997a240/")
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+    private fun abrirURL(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 }

@@ -8,7 +8,7 @@ import org.gfigueras.practicaobligariauniversos.model.entities.Universo
 class DAOUsers : IDAOUsers {
     private val client = HttpClient()
 
-    private val URL: String = "https://gfserver-dev-rhbq.1.ie-1.fl0.io/"
+    private val URL: String = "https://gfaccounts-grtx.1.ie-1.fl0.io/"
 
     override suspend fun login(username: String, password: String): Boolean {
         val url = "$URL/login/$username/$password"

@@ -163,6 +163,23 @@ class LoginActivity : AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         }
     }
+    override fun onBackPressed() {
+
+
+        val builder = android.app.AlertDialog.Builder(this)
+        builder.setMessage("¿Estás seguro de que quieres salir?")
+        builder.setPositiveButton("Sí") { _, _ ->
+            finish()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            // Si el usuario cancela, cierra el cuadro de diálogo
+            dialog.dismiss()
+        }
+        val dialog = builder.create().show()
+
+        // super.onBackPressed()
+
+    }
 
     private fun updateUIForLogin() {
         findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.GONE
