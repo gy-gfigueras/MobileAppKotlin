@@ -35,6 +35,18 @@ class DAOUsers : IDAOUsers {
             client.close()
         }
     }
+    override suspend fun changePasswordForgotten(username: String, email: String, password: String): Int {
+        val url = "$URL/changePasswordForgotten/$username/$email/$password"
+        val client = HttpClient()
+        try {
+            return client.get<String>(url).toInt()
+
+        } catch (e: Exception) {
+            return -4
+        } finally {
+            client.close()
+        }
+    }
 
     override suspend fun getUser(username: String, password: String): String {
         val url = "$URL/user/$username/$password"

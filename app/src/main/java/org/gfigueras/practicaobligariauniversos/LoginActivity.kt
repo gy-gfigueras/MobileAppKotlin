@@ -2,6 +2,8 @@ package org.gfigueras.practicaobligariauniversos
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         var loginState: Boolean = false
+        var changePasswd: TextView = findViewById(R.id.changePasswd)
         findViewById<EditText>(R.id.txtUsername).text.clear()
         findViewById<EditText>(R.id.txtPassword).text.clear()
 
@@ -67,137 +70,211 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        loginButton!!.setOnClickListener {
-            lifecycleScope.launch {
-                val username: EditText = findViewById(R.id.txtUsername)
-                val password: EditText = findViewById(R.id.txtPassword)
-                val email: EditText = findViewById(R.id.txtEmail)
+            changePasswd.setOnClickListener {
+                val builder = AlertDialog.Builder(this)
+                val view = layoutInflater.inflate(R.layout.custom_password_dialog, null)
+                builder.setView(view)
 
-                if (loginState) {
-                    if (controlador!!.login(username.text.toString(), password.text.toString())) {
-                        Tokenizer.initialize(this@LoginActivity)
-                        Controller.userSaved = Tokenizer.tokenizar(controlador!!.getUser(username.text.toString(),password.text.toString()!!))
-                        Log.i("USER", Controller.userSaved.toString())
-                        showLoadingScreen()
-                    } else {
-                        val dialog = AlertDialog.Builder(this@LoginActivity)
-                            .setTitle("ERROR")
-                            .setMessage("Usuario incorrecto")
-                            .setPositiveButton("Aceptar", null)
-                            .create()
-                            .show()
+                val dialog = builder.create()
+                dialog.window?.setBackgroundDrawableResource(R.color.nav_background)
+
+
+                dialog.show()
+
+                // Find your EditTexts in the custom layout
+                val email = dialog.findViewById<EditText>(R.id.txtEmailChangePasswd)
+                val username = dialog.findViewById<EditText>(R.id.txtUsernameChangePasswd)
+                val password = dialog.findViewById<EditText>(R.id.txtPasswordChangePasswd)
+
+                // Find your buttons in the custom layout
+                val acceptButton = dialog.findViewById<Button>(R.id.acceptButton)
+                val cancelButton = dialog.findViewById<Button>(R.id.cancelButton)
+                acceptButton!!.setOnClickListener {
+                    lifecycleScope.launch {
+                        if(controlador!!.changePasswordForgotten(username!!.text.toString(), email!!.text.toString(), password!!.text.toString()) == 0){
+                            val dialog = AlertDialog.Builder(this@LoginActivity)
+                                .setTitle("CORRECTO")
+                                .setMessage("CONTRASEÑA CAMBIADA")
+                                .setPositiveButton("Aceptar", null)
+                                .create()
+                                .show()
+                        }else{
+                            val dialog = AlertDialog.Builder(this@LoginActivity)
+                                .setTitle("ERROR")
+                                .setMessage("ERROR, COMPRUEBE EL EMAIL O USUARIO")
+                                .setPositiveButton("Aceptar", null)
+                                .create()
+                                .show()
+                        }
                     }
-                } else {
-                    // Corregir el bloque del sign-up
-                    when (controlador!!.signUp(username.text.toString(), email.text.toString(), password.text.toString())) {
-                        0 -> {
+                    dialog.dismiss()
+                }
+
+
+                cancelButton!!.setOnClickListener {
+                    // Dismiss the dialog
+                    dialog.dismiss()
+                }
+            }
+
+            loginButton!!.setOnClickListener {
+                lifecycleScope.launch {
+                    val username: EditText = findViewById(R.id.txtUsername)
+                    val password: EditText = findViewById(R.id.txtPassword)
+                    val email: EditText = findViewById(R.id.txtEmail)
+
+                    if (loginState) {
+                        if (controlador!!.login(
+                                username.text.toString(),
+                                password.text.toString()
+                            )
+                        ) {
+                            Tokenizer.initialize(this@LoginActivity)
+                            Controller.userSaved = Tokenizer.tokenizar(
+                                controlador!!.getUser(
+                                    username.text.toString(),
+                                    password.text.toString()!!
+                                )
+                            )
+                            Log.i("USER", Controller.userSaved.toString())
+                            showLoadingScreen()
+                        } else {
                             val dialog = AlertDialog.Builder(this@LoginActivity)
-                                .setTitle("Correcto")
-                                .setMessage("Usuario creado correctamente, inicie sesión")
+                                .setTitle("ERROR")
+                                .setMessage("Usuario incorrecto")
                                 .setPositiveButton("Aceptar", null)
                                 .create()
                                 .show()
                         }
-                        1 -> {
-                            val dialog = AlertDialog.Builder(this@LoginActivity)
-                                .setTitle("Incorrecto")
-                                .setMessage("El nombre de usuario ya existe")
-                                .setPositiveButton("Aceptar", null)
-                                .create()
-                                .show()
-                        }
-                        2 -> {
-                            val dialog = AlertDialog.Builder(this@LoginActivity)
-                                .setTitle("Incorrecto")
-                                .setMessage("Revise su correo, o puede que ya exista")
-                                .setPositiveButton("Aceptar", null)
-                                .create()
-                                .show()
-                        }
-                        else -> {
-                            val dialog = AlertDialog.Builder(this@LoginActivity)
-                                .setTitle("Error")
-                                .setMessage("Error en la base de datos")
-                                .setPositiveButton("Aceptar", null)
-                                .create()
-                                .show()
+                    } else {
+                        // Corregir el bloque del sign-up
+                        when (controlador!!.signUp(
+                            username.text.toString(),
+                            email.text.toString(),
+                            password.text.toString()
+                        )) {
+                            0 -> {
+                                val dialog = AlertDialog.Builder(this@LoginActivity)
+                                    .setTitle("Correcto")
+                                    .setMessage("Usuario creado correctamente, inicie sesión")
+                                    .setPositiveButton("Aceptar", null)
+                                    .create()
+                                    .show()
+                            }
+
+                            1 -> {
+                                val dialog = AlertDialog.Builder(this@LoginActivity)
+                                    .setTitle("Incorrecto")
+                                    .setMessage("El nombre de usuario ya existe")
+                                    .setPositiveButton("Aceptar", null)
+                                    .create()
+                                    .show()
+                            }
+
+                            2 -> {
+                                val dialog = AlertDialog.Builder(this@LoginActivity)
+                                    .setTitle("Incorrecto")
+                                    .setMessage("Revise su correo, o puede que ya exista")
+                                    .setPositiveButton("Aceptar", null)
+                                    .create()
+                                    .show()
+                            }
+
+                            else -> {
+                                val dialog = AlertDialog.Builder(this@LoginActivity)
+                                    .setTitle("Error")
+                                    .setMessage("Error en la base de datos")
+                                    .setPositiveButton("Aceptar", null)
+                                    .create()
+                                    .show()
+                            }
                         }
                     }
                 }
             }
+
+            // Configuración de acciones para los botones de redes sociales
+            buttonGithub!!.setOnClickListener {
+                it.startAnimation(AnimationUtils.loadAnimation(it.context, R.anim.button_click))
+                val browserIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/gfigueras03"))
+                startActivity(browserIntent)
+            }
+
+            buttonLinkedin!!.setOnClickListener {
+                it.startAnimation(AnimationUtils.loadAnimation(it.context, R.anim.button_click))
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://www.linkedin.com/in/guillermo-figueras-jim%C3%A9nez-b2997a240/")
+                )
+                startActivity(browserIntent)
+            }
+            buttonInstagram!!.setOnClickListener {
+                it.startAnimation(AnimationUtils.loadAnimation(it.context, R.anim.button_click))
+                val browserIntent =
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.instagram.com/guiillee_.03/?next=%2F")
+                    )
+                startActivity(browserIntent)
+            }
+
+            val rootView =
+                findViewById<View>(R.id.activityLogin) // Reemplaza con el ID de tu layout principal
+            rootView.setOnClickListener {
+                hideKeyboard()
+            }
         }
 
-        // Configuración de acciones para los botones de redes sociales
-        buttonGithub!!.setOnClickListener {
-            it.startAnimation(AnimationUtils.loadAnimation(it.context, R.anim.button_click))
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/gfigueras03"))
-            startActivity(browserIntent)
+        private fun hideKeyboard() {
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val currentFocusedView = currentFocus
+
+            if (currentFocusedView != null) {
+                inputMethodManager.hideSoftInputFromWindow(
+                    currentFocusedView.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
+            }
         }
 
-        buttonLinkedin!!.setOnClickListener {
-            it.startAnimation(AnimationUtils.loadAnimation(it.context, R.anim.button_click))
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://www.linkedin.com/in/guillermo-figueras-jim%C3%A9nez-b2997a240/")
-            )
-            startActivity(browserIntent)
+        override fun onBackPressed() {
+
+
+            val builder = android.app.AlertDialog.Builder(this)
+            builder.setMessage("¿Estás seguro de que quieres salir?")
+            builder.setPositiveButton("Sí") { _, _ ->
+                finish()
+            }
+            builder.setNegativeButton("No") { dialog, _ ->
+                // Si el usuario cancela, cierra el cuadro de diálogo
+                dialog.dismiss()
+            }
+            val dialog = builder.create().show()
+
+            // super.onBackPressed()
+
         }
-        buttonInstagram!!.setOnClickListener {
-            it.startAnimation(AnimationUtils.loadAnimation(it.context, R.anim.button_click))
-            val browserIntent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/guiillee_.03/?next=%2F"))
-            startActivity(browserIntent)
+
+        private fun updateUIForLogin() {
+            findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.GONE
+            findViewById<Button>(R.id.loginButton).text = "Login"
+            findViewById<TextView>(R.id.stateText).text = "Registrarse"
         }
 
-        val rootView = findViewById<View>(R.id.activityLogin) // Reemplaza con el ID de tu layout principal
-        rootView.setOnClickListener {
-            hideKeyboard()
+        private fun updateUIForSignUp() {
+            findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.VISIBLE
+            findViewById<Button>(R.id.loginButton).text = "Registrarse"
+            findViewById<TextView>(R.id.stateText).text = "Iniciar Sesión"
         }
-    }
 
-    private fun hideKeyboard() {
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        val currentFocusedView = currentFocus
-
-        if (currentFocusedView != null) {
-            inputMethodManager.hideSoftInputFromWindow(currentFocusedView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
-    }
-    override fun onBackPressed() {
-
-
-        val builder = android.app.AlertDialog.Builder(this)
-        builder.setMessage("¿Estás seguro de que quieres salir?")
-        builder.setPositiveButton("Sí") { _, _ ->
+        private fun showLoadingScreen() {
+            val loadingIntent = Intent(this, LoadingActivity::class.java)
+            startActivity(loadingIntent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             finish()
         }
-        builder.setNegativeButton("No") { dialog, _ ->
-            // Si el usuario cancela, cierra el cuadro de diálogo
-            dialog.dismiss()
-        }
-        val dialog = builder.create().show()
-
-        // super.onBackPressed()
 
     }
 
-    private fun updateUIForLogin() {
-        findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.GONE
-        findViewById<Button>(R.id.loginButton).text = "Login"
-        findViewById<TextView>(R.id.stateText).text = "Registrarse"
-    }
-
-    private fun updateUIForSignUp() {
-        findViewById<TextInputLayout>(R.id.txtLayoutEmail).visibility = TextInputLayout.VISIBLE
-        findViewById<Button>(R.id.loginButton).text = "Registrarse"
-        findViewById<TextView>(R.id.stateText).text = "Iniciar Sesión"
-    }
-
-    private fun showLoadingScreen() {
-        val loadingIntent = Intent(this, LoadingActivity::class.java)
-        startActivity(loadingIntent)
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        finish()
-    }
-
-}

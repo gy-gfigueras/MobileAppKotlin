@@ -11,6 +11,7 @@ interface IDAOUsers {
     suspend fun setUniverseFav(username: String,universo: Universo?):Boolean
     suspend fun deleteUser(username:String, password: String, usernameToDelete:String):Boolean
     suspend fun getUsers():String?
+    suspend fun changePasswordForgotten(username:String, email:String, password:String):Int
 
         fun closeClient()
 }

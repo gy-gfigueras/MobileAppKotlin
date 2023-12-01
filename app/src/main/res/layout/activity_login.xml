@@ -23,7 +23,7 @@
         tools:ignore="ContentDescription" />
 
     <LinearLayout
-        android:id="@+id/cardlyt"
+        android:id="@+id/cardLayotChangePasswd"
         android:layout_width="345dp"
         android:layout_height="419dp"
         android:gravity="center_horizontal|top"
@@ -191,6 +191,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.638"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/changePasswd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_file"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:text="Cambiar contraseña
+"
+            android:textColor="@color/white"
+            android:textFontWeight="400"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton"
+            app:layout_constraintVertical_bias="0.038"
+            tools:ignore="HardcodedText"
             tools:visibility="visible" />
 
         <TextView

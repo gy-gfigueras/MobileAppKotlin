@@ -95,5 +95,14 @@ class Controller(context: Context): IController {
         return daousers!!.deleteUser(username,password,usernameToDelete)
     }
 
+    override suspend fun changePasswordForgotten(
+        username: String,
+        email: String,
+        password: String,
+    ): Int {
+
+        return daousers!!.changePasswordForgotten(username,email,password)
+    }
+
 
 }
