@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "PracticaObligariaUniversos"
-include(":app")
+include(":GFIGUERASAPP")
  

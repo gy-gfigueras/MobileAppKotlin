@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="org.gfigueras.practicaobligariauniversos.ui.universos.UniversosFragment"
+        android:label="Universos"
+        tools:layout="@layout/fragment_universos" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="org.gfigueras.practicaobligariauniversos.ui.mapas.MapasFragment"
+        android:label="Mapas"
+        tools:layout="@layout/fragment_mapas" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="org.gfigueras.practicaobligariauniversos.ui.usuario.UsuarioFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_usuario" />
+    <fragment
+        android:id="@+id/nav_users"
+        android:name="org.gfigueras.practicaobligariauniversos.ui.users.UsersFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_users" />
+
+</navigation>

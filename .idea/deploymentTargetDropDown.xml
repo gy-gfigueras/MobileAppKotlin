@@ -2,6 +2,15 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="GFIGUERAS">
+        <State />
+      </entry>
+      <entry key="GFIGUERASAPP">
+        <State />
+      </entry>
+      <entry key="GFIGUERAS_APP">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
